@@ -43,6 +43,7 @@ const SearchSelectInput = ({
   disabled,
 }: Props) => {
   const { control, formState } = useFormContext();
+  const selectId = useId();
 
   return (
     <div className="control custom-select">
@@ -57,7 +58,7 @@ const SearchSelectInput = ({
         name={name}
         render={({ field: { onBlur, onChange, value, name, ref } }) => (
           <ReactSelect
-            instanceId={useId()}
+            instanceId={selectId}
             id={name}
             isDisabled={disabled}
             ref={ref}
