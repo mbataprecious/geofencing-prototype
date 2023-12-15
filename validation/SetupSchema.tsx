@@ -6,7 +6,10 @@ export const setupSchema = object({
     value: string().required().label("location"),
     label: string().required().label("label"),
   }),
-  radius: number().label("code"),
+  radius: number()
+    .label("radius")
+    .required()
+    .min(5, "radius must be greater than 5 miles"),
 });
 
-export type LevelDescriptionSchemaType = InferType<typeof setupSchema>;
+export type SetupSchemaType = InferType<typeof setupSchema>;

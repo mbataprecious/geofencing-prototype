@@ -55,7 +55,7 @@ const Input = ({
       )}
       <input
         disabled={disabled}
-        className={`focus:outline-none rounded-[6px] p-2  text-base text-black ${
+        className={`w-full focus:outline-none rounded-[6px] p-2  text-base text-black ${
           getErrObject(name, formState?.errors) &&
           !dontShowError &&
           "errorControl"
