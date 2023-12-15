@@ -65,7 +65,7 @@ const AdminSetup = () => {
   });
   return (
     <div className=" text-white mt-8 px-6">
-      <h3 className=" text-xl underline mb-32">Take Attendance</h3>
+      <h3 className=" text-xl underline mb-32">Set Location setup</h3>
       <FormProvider {...methods}>
         <form
           className=" flex flex-col gap-5 max-w-2xl"
