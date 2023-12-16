@@ -58,7 +58,7 @@ const TakeAttendance = () => {
         setAttendStatus("success");
         toast.success("you are within the geofenced area.");
       } else {
-        toast.success("Attendance failed.not in geofenced area.");
+        toast.error("Attendance failed.not in geofenced area.");
         setAttendStatus("error");
       }
     });
