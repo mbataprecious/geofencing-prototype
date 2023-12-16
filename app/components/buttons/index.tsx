@@ -31,7 +31,7 @@ const buttonStyles = cva(
         true: "w-full",
       },
       isOutlined: {
-        true: "!border-2 bg-transparent hover:bg-transparent",
+        true: "!border-2 !bg-transparent hover:bg-transparent",
       },
     },
     defaultVariants: {

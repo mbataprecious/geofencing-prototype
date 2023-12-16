@@ -29,8 +29,7 @@ const AdminSetup = () => {
         method: "POST",
         headers: {
           Accept: "*/*",
-          "User-Agent": "Thunder Client (https://www.thunderclient.com)",
-          "X-Goog-Api-Key": "AIzaSyD6XOuP55y8eBL8R11VbaugRdg4iE955fw",
+          "X-Goog-Api-Key": process.env.NEXT_PUBLIC_GOOGLE_API_KEY,
           "X-Goog-FieldMask":
             "places.displayName,places.formattedAddress,places.location",
         },
@@ -82,7 +81,9 @@ const AdminSetup = () => {
             radius in miles(m): <Input name="radius" type="number" />
           </div>
           <div className=" mt-16">
-            <Button type="submit">Submit</Button>
+            <Button isOutlined type="submit">
+              Submit
+            </Button>
           </div>
         </form>
       </FormProvider>

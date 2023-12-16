@@ -1,7 +1,12 @@
 import React from "react";
+import TakeAttendance from "../components/TakeAttendance";
 
 const page = () => {
-  return <div>Welcome to student area</div>;
+  return (
+    <main>
+      <TakeAttendance />
+    </main>
+  );
 };
 
 export default page;
