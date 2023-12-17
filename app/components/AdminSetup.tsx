@@ -64,10 +64,9 @@ const AdminSetup = () => {
   });
   return (
     <div className=" text-white mt-8 px-6">
-      <h3 className=" text-xl underline mb-32">Set Location setup</h3>
       <FormProvider {...methods}>
         <form
-          className=" flex flex-col gap-5 max-w-2xl"
+          className=" flex flex-col gap-5 mt-32 max-w-2xl"
           onSubmit={methods.handleSubmit(onSubmit)}
         >
           <div>
@@ -78,7 +77,7 @@ const AdminSetup = () => {
             <SearchSelectInput name="location" loadOptions={loadOption} />
           </div>
           <div>
-            radius in miles(m): <Input name="radius" type="number" />
+            radius in meters(m): <Input name="radius" type="number" />
           </div>
           <div className=" mt-16">
             <Button isOutlined type="submit">

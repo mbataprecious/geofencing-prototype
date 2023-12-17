@@ -9,7 +9,7 @@ export const setupSchema = object({
   radius: number()
     .label("radius")
     .required()
-    .min(5, "radius must be greater than 5 miles"),
+    .min(1, "radius must be greater than 5 miles"),
 });
 
 export type SetupSchemaType = InferType<typeof setupSchema>;

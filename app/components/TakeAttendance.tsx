@@ -7,8 +7,9 @@ import { object, string } from "yup";
 import { getData } from "@/utils/storage";
 import { Button } from "./buttons";
 import { getGeoLocation } from "@/utils/getLocation";
-import { SetupSchemaType } from "@/validation/SetupSchema";
 import { toast } from "react-toastify";
+import Link from "next/link";
+import axios from "axios";
 
 export const setupSchema = object({
   code: string()
@@ -25,13 +26,14 @@ export const setupSchema = object({
 });
 const TakeAttendance = () => {
   const [attendStatus, setAttendStatus] = useState<"success" | "error">();
+  const [location, setLocation] = useState("");
 
   useEffect(() => {
     getGeoLocation(() => {
       console.log("location accepted...");
     });
   }, []);
-  const onSubmit = () => {
+  const onSubmit = async () => {
     const savedData = getData();
     if (!savedData?.code) {
       toast.error("ERR: no saved code.");
@@ -42,7 +44,7 @@ const TakeAttendance = () => {
       lng: savedData.location.longitude,
     };
 
-    getGeoLocation((position) => {
+    getGeoLocation(async (position) => {
       // Use Geometry Library to check if the location is within the geofence
       const isWithinGeofence =
         google.maps.geometry.spherical.computeDistanceBetween(
@@ -51,9 +53,12 @@ const TakeAttendance = () => {
             lat: position.coords.latitude,
             lng: position.coords.longitude,
           })
-        ) <=
-        savedData.radius * 1609.34;
-
+        ) <= savedData.radius;
+      const { data } = await axios({
+        url: `https://maps.googleapis.com/maps/api/geocode/json?latlng=${position.coords.latitude},${position.coords.longitude}&location_type=APPROXIMATE&key=${process.env.NEXT_PUBLIC_GOOGLE_API_KEY}`,
+        method: "GET",
+      });
+      setLocation(data.results[0].formatted_address);
       if (isWithinGeofence) {
         setAttendStatus("success");
         toast.success("you are within the geofenced area.");
@@ -69,7 +74,10 @@ const TakeAttendance = () => {
   });
   return (
     <div className=" text-white mt-8 px-6">
-      <h3 className=" text-xl underline mb-32"> Take Attendance</h3>
+      <Link href="/">
+        <h3 className=" text-xl hover:underline mb-32"> Set Location</h3>
+      </Link>
+
       <FormProvider {...methods}>
         <form
           className=" flex justify-center items-center"
@@ -84,14 +92,14 @@ const TakeAttendance = () => {
               <div className=" text-green-500 text-base font-medium">
                 Successful
                 <br />
-                Location: *********
+                Location: {location}
               </div>
             )}
             {attendStatus === "error" && (
               <div className=" text-red-500 text-base font-medium">
                 Error
                 <br />
-                Location: *********
+                Location: {location}
               </div>
             )}
             <div className=" flex justify-center items-center">
