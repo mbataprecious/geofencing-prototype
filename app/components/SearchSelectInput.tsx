@@ -23,6 +23,7 @@ interface Props {
   isMulti?: boolean;
   required?: boolean;
   disabled?: boolean;
+  className?: string;
 }
 
 const colourStyles: StylesConfig<{ value: string; label: string }> = {
@@ -42,12 +43,13 @@ const SearchSelectInput = ({
   isMulti,
   required,
   disabled,
+  className,
 }: Props) => {
   const { control, formState } = useFormContext();
   const selectId = useId();
 
   return (
-    <div className="control custom-select">
+    <div className={"control custom-select " + className}>
       {label && (
         <label className="label" htmlFor={name}>
           {label} {required && <i className="text-xs text-[#0275D8]">*</i>}

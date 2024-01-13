@@ -9,6 +9,7 @@ import axios from "axios";
 import { Button } from "./buttons";
 import { setData } from "@/utils/storage";
 import { useRouter } from "next/navigation";
+import { IoLocationSharp } from "react-icons/io5";
 
 const AdminSetup = () => {
   const router = useRouter();
@@ -62,6 +63,21 @@ const AdminSetup = () => {
     resolver: yupResolver ? yupResolver(setupSchema) : undefined,
     defaultValues,
   });
+
+  const {
+    setValue,
+    formState: { isSubmitting },
+  } = methods;
+
+  const handleLocation = () => {
+    navigator.geolocation.getCurrentPosition((position) => {
+      setValue("location", {
+        label: "current location",
+        value: `${position.coords.latitude},${position.coords.longitude}`,
+      });
+    });
+  };
+
   return (
     <div className=" text-white mt-8 px-6">
       <FormProvider {...methods}>
@@ -74,13 +90,25 @@ const AdminSetup = () => {
           </div>
           <div>
             location:{" "}
-            <SearchSelectInput name="location" loadOptions={loadOption} />
+            <div className=" flex gap-2">
+              <SearchSelectInput
+                className=" flex-1"
+                name="location"
+                loadOptions={loadOption}
+              />{" "}
+              <div
+                className="flex justify-center px-1.5 items-center rounded-full hover:bg-[#0000001b] cursor-pointer"
+                onClick={handleLocation}
+              >
+                <IoLocationSharp className=" w-8 h-8" />
+              </div>
+            </div>
           </div>
           <div>
             radius in meters(m): <Input name="radius" type="number" />
           </div>
           <div className=" mt-16">
-            <Button isOutlined type="submit">
+            <Button isOutlined isBusy={isSubmitting} type="submit">
               Submit
             </Button>
           </div>
